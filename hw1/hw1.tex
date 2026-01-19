@@ -1,0 +1,91 @@
+\documentclass{article}
+
+\usepackage{amsmath, parskip}
+\usepackage[margin=1.25in]{geometry}
+\usepackage[shortlabels]{enumitem}
+
+\renewcommand{\thesection}{\arabic{section}.}
+\renewcommand{\thesubsection}{\alph{subsection}.}
+
+\title{Homework 1: Strings and Languages}
+\author{Will Griffin}
+
+\begin{document}
+    \maketitle
+
+    \section{Proof Practice}
+
+    % 1a - Statement-Reason Proof
+    \subsection{Statement-Reason Proof:}
+    
+    \begin{description}
+        \item[To show:] If $s$ is a string, every substring of a substring of $s$ is a substring of $s$.
+        \item[Proof:]
+    \end{description}
+
+    % use & to separate columns, \\ to separate lines
+    \begin{center}
+    \begin{tabular}{ll}
+        1. $y$ is a substring of $s$ & Universal instantiation \\
+        2. $s = xyz$ for some $x$, $z$ & (1), def. substring \\
+        3. $v$ is a substring of $y$ & Universal instantiation \\ 
+        4. $y = uvw$ for some $u$, $w$ & (3), def. substring \\
+        5. $s = xuvwz$ & (2), (4), substitution
+    \end{tabular}
+    \end{center}
+
+    % 1b - Paragraph Proof
+    \subsection{Paragraph Proof:}
+
+    \begin{description}
+        \item[To show:] If $w$ is a string, every prefix of a suffix of $w$ is a suffix of a prefix of $w$.
+        \item[Proof:] Let $v$ be a suffix of $w$, that is, $w = xv$ for some $x$; and let $y$ be a prefix of $v$, that is, $v = yz$ for some $z$. We can combine these equations such that $w = xyz$. By definition of a prefix, $xy$ is a prefix of $w$, and by definition of a suffix, $y$ is a suffix of $xy$. Therefore, $y$ is a suffix of a prefix $xy$ of $w$. 
+    \end{description}
+
+    \section{String homomorphisms}
+
+    \begin{description}
+        \item[To show:] For any string homomorphism $f$, and for any string $w = w_1 \cdots w_n$ (where $n \ge 0$ and, for $j = 1, \ldots, n, w_j \in \Sigma$), we have
+        \item
+            \begin{equation}
+                f(w) = f(w_1) \cdots f(w_n). \tag{\textasteriskcentered{}}
+            \end{equation}
+        \item You may assume the following about strings:
+            \begin{itemize}
+                \item Identity: For all $x \in \Sigma^*$, $x\varepsilon = x$ and $\varepsilon x = x$.
+                \item Right cancellation: For all $x$, $y$, $z \in \Sigma^*$, if $xz = yz$, then $x = y$.
+                \item Left cancellation: For all $x$, $y$, $z \in \Sigma^*$, if $xy = xz$, then $y = z$.
+            \end{itemize}
+        \item[Proof:] Let $n = 0$. Any string of length 0 is just the zero-length string $\varepsilon$. Therefore, $w = \varepsilon$ and $f(\varepsilon) = \varepsilon$. Therefore, (\textasteriskcentered) holds for $n = 0$
+
+            Assume (\textasteriskcentered) is true for $n = i$, where $i \ge 0$. Therefore, $w = w_1 \cdots w_i$ and $f(w) = f(w_1 \cdots w_i) = f(w_1) \cdots f(w_i)$.
+
+            Let $n = i + 1$. Therefore, $w = w_1 \cdots w_i w_{i+1}$. This can also be written as a concatenation of a string of length $i$ and a string of length 1: $w = (w_1 \cdots w_i) w_{i+1}$. 
+            
+            Applying the homomorphism function, we get $f((w_1 \cdots w_i) w_{i+1}) = f(w_1 \cdots w_i) f(w_{i+1})$. We can then apply the inductive hypothesis to the first term, getting us $f(w) = \left[f(w_1) \cdots f(w_i)\right] \cdot f(w_{i+1})$. This can be rewritten as $f(w) = f(w_1) \cdots f(w_i) f(w_{i+1})$.
+
+            Since a string homomorphism $f$ is shown to operate symbol-by-symbol for a string of length 0 and a string of length $n = i + 1$, where it is assumed that this is true for a string of length $n = i$, by induction, this is true for any string of length $n \ge 0$.
+
+    \end{description}
+
+
+    \section{Finite and cofinite}
+
+    Let $\Sigma = \{a, b\}$. Define $\mathbf{\mathsf{FINITE}}$ to be the set of all finite languages over $\Sigma$, and let $\mathbf{\mathsf{coFINITE}}$ be the set of languages over $\Sigma$ whose \textit{complement} is finite:
+
+    \begin{equation*}
+        \mathbf{\mathsf{coFINITE}} = \{ L \subseteq \Sigma^* | \overline{L} \in \mathbf{\mathsf{FINITE}} \}
+    \end{equation*}
+
+    where $\overline{L} = \Sigma^* \setminus L$. For example, $\Sigma^*$ is in $\mathbf{\mathsf{coFINITE}}$ because its complement is $\emptyset$, which is finite. (Please think carefully about this definition, and note that $\mathbf{\mathsf{coFINITE}}$ isn't the same thing as $\overline{\mathbf{\mathsf{FINITE}}}$).
+
+    You may assume the union of two finite sets is finite.
+
+    \begin{enumerate}[(a)]
+        \item If $L \in \mathbf{\mathsf{FINITE}}$, what data structure could you use to represent $L$, and given a string $w$, how would you decide whether $w \in L$?
+        \item If $L \in \mathbf{\mathsf{coFINITE}}$, what data structure could you use to represent $L$, and given a string $w$, how would you decide whether $w \in L$?
+        \item Are there any languages in $\mathbf{\mathsf{FINITE}} \cap \mathbf{\mathsf{coFINITE}}$? Prove your answer.
+        \item Are there any languages over $\Sigma$ that are \textit{not} in $\mathbf{\mathsf{FINITE}} \cup \mathbf{\mathsf{coFINITE}}$? Prove your answer.
+    \end{enumerate}
+
+\end{document}
