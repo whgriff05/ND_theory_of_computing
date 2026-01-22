@@ -56,15 +56,22 @@
                 \item Right cancellation: For all $x$, $y$, $z \in \Sigma^*$, if $xz = yz$, then $x = y$.
                 \item Left cancellation: For all $x$, $y$, $z \in \Sigma^*$, if $xy = xz$, then $y = z$.
             \end{itemize}
-        \item[Proof:] Let $n = 0$. Any string of length 0 is just the zero-length string $\varepsilon$. Therefore, $w = \varepsilon$ and $f(\varepsilon) = \varepsilon$. Therefore, (\textasteriskcentered) holds for $n = 0$
+        \item[Proof:] 
+            \begin{enumerate}[(a)]
+                \item Let $n = 0$. Any string of length 0 is $\varepsilon$. Therefore, $w = \varepsilon$. for an arbitrary string $u$ concatenated with $w$, that is, $uw = u\varepsilon$, any string concatenated with the empty string is itself by the given identity axiom. Therefore, $uw = u\varepsilon = u$.
 
-            Assume (\textasteriskcentered) is true for $n = i$, where $i \ge 0$. Therefore, $w = w_1 \cdots w_i$ and $f(w) = f(w_1 \cdots w_i) = f(w_1) \cdots f(w_i)$.
+                    For a homomorphism of $uw$, that is, $f(uw)$, since $uw = u$, $f(uw) = f(u)$. Therefore, since $w = \varepsilon$, $f(w) = f(\varepsilon) = \varepsilon$. Therefore, (\textasteriskcentered) is true for $n = 0$.
 
-            Let $n = i + 1$. Therefore, $w = w_1 \cdots w_i w_{i+1}$. This can also be written as a concatenation of a string of length $i$ and a string of length 1: $w = (w_1 \cdots w_i) w_{i+1}$. 
-            
-            Applying the homomorphism function, we get $f((w_1 \cdots w_i) w_{i+1}) = f(w_1 \cdots w_i) f(w_{i+1})$. We can then apply the inductive hypothesis to the first term, getting us $f(w) = \left[f(w_1) \cdots f(w_i)\right] \cdot f(w_{i+1})$. This can be rewritten as $f(w) = f(w_1) \cdots f(w_i) f(w_{i+1})$.
+                \item Assume (\textasteriskcentered) is true for $n = i$, where $i \ge 0$. Therefore, $w = w_1 \cdots w_i$ and $f(w) = f(w_1 \cdots w_i) = f(w_1) \cdots f(w_i)$.
 
-            Since a string homomorphism $f$ is shown to operate symbol-by-symbol for a string of length 0 and a string of length $n = i + 1$, where it is assumed that this is true for a string of length $n = i$, by induction, this is true for any string of length $n \ge 0$.
+                    Let $n = i + 1$. Therefore, $w = w_1 \cdots w_i w_{i + 1}$. This can be written as a concatenation of a string of length $i$ and a string of length $1$, that is, $w = (w_1 \cdots w_i) w_{i+1}$.
+
+                    Applying the homomorphism function, we get $f(w) = f((w_1 \cdots w_i) w_{i+1})$. This can be expanded to $f(w_1 \cdots w_i)f(w_{i+1}) $ by our definition of a string homomorphism.
+
+                    Applying the inductive hypothesis, we get $f(w) = \left(f(w_1) \cdots f(w_i)\right)f(w_{i+1})$. Removing the parentheses, this becomes $f(w) = f(w_1) \cdots f(w_i) f(w_{i+1})$. This falls in the original form $f(w) = f(w_1) \cdots f(w_n)$.
+
+                    Since a string homomorphism $f$ is shown to operate symbol-by-symbol for a string of length $0$ and a string of length $n = i + 1$ when it is assumed true for $n = i$, by induction, this is true of any string with length $n \ge 0$.
+            \end{enumerate}
 
     \end{description}
 
@@ -83,9 +90,25 @@
 
     \begin{enumerate}[(a)]
         \item If $L \in \mathbf{\mathsf{FINITE}}$, what data structure could you use to represent $L$, and given a string $w$, how would you decide whether $w \in L$?
+
+            To represent $L$, I would use a trie data structure (a tree used to store letters). To decide whether $w \in L$, starting at the root, for each character $c \in w$, search for $c$ in the current node's children, and if found, set that child as the current node. If all characters of $w$ are found in order, $w \in L$. Otherwise, if a character is not found, $w \notin L$.
+
         \item If $L \in \mathbf{\mathsf{coFINITE}}$, what data structure could you use to represent $L$, and given a string $w$, how would you decide whether $w \in L$?
+
+            I would use a trie to store $\overline{L}$. Since $L \in \mathbf{\mathsf{coFINITE}}$, its complement would have a finite number of elements and therefore would be able to be stored in a finite data structure in some kind of memory. To decide whether $w \in L$, starting at the root, for each character $c \in w$, search for $c$ in the current node's children, and if found, set that child as the current node. If all characters of $w$ are found in order, $w \in \overline{L}$, and therefore $w \notin L$. Otherwise, if a character is not found, $w \in L$.
+
         \item Are there any languages in $\mathbf{\mathsf{FINITE}} \cap \mathbf{\mathsf{coFINITE}}$? Prove your answer.
+
+            $L$ is a finite language, that is, $L \in \mathbf{\mathsf{FINITE}}$. Since $\Sigma^*$ is infinite and $L$ is finite, $\Sigma^* \setminus L$ is by definition infinite. Therefore, since $\overline{L} = \Sigma^* \setminus L$, $\overline{L}$ is infinite. Since $\overline{L}$ is infinite, $L \notin \mathbf{\mathsf{coFINITE}}$. Therefore, $\mathbf{\mathsf{FINITE}} \cup \mathbf{\mathsf{coFINITE}} = \emptyset$.
+
         \item Are there any languages over $\Sigma$ that are \textit{not} in $\mathbf{\mathsf{FINITE}} \cup \mathbf{\mathsf{coFINITE}}$? Prove your answer.
+
+            For the sake of proof by counterexample, let language $L$ be the set of all strings of only "a", that is, $L = \{a, aa, aaa, aaaa, ...\}$. Therefore, $\overline{L} = \{\varepsilon, b, ab, ba, bb, ...\}$. 
+
+            Since $L$ is infinite, $L \notin \mathbf{\mathsf{FINITE}}$. Since $\overline{L}$ is infinite, $L \notin \mathbf{\mathsf{coFINITE}}$. Therefore, $L \notin \mathbf{\mathsf{FINITE}} \cup \mathbf{\mathsf{coFINITE}}$.
+
+            Therefore, there are langauges that are not in $\mathbf{\mathsf{FINITE}} \cup \mathbf{\mathsf{coFINITE}}$.
+
     \end{enumerate}
 
 \end{document}
