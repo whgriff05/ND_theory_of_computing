@@ -1,0 +1,43 @@
+\documentclass{article}
+
+\usepackage{amsmath, parskip, tikz}
+\usetikzlibrary{automata}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usepackage[margin=1.25in]{geometry}
+\usepackage[shortlabels]{enumitem}
+
+\renewcommand{\thesection}{\arabic{section}.}
+\renewcommand{\thesubsection}{\alph{section}.}
+
+\tikzset{
+    node distance=2.5cm,
+    every state/.append style={
+        semithick,
+        fill=gray!10
+    },
+    initial/.append style={
+        initial text={},
+        initial distance=0.5cm
+    },
+    accepting/.append style={
+        double=gray!10,
+        double distance=2pt,
+        outer sep=1pt
+    },
+    every edge/.append style={
+        draw,
+        ->,>=stealth',
+        auto,
+        semithick
+    }
+}
+
+\title{Homework X: }
+\author{Will Griffin}
+
+\begin{document}
+    \maketitle
+
+    
+\end{document}
