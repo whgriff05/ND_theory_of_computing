@@ -115,9 +115,9 @@
 
                 Assume for the sake of contradiction that $C$ is a regular language. Therefore, by the pumping lemma, we get a certain pumping length $p$. 
 
-                Let a string $s = 1^p 1^p$. Since $s \in C$, by the pumping lemma, $s$ can be written as $s = xyz$, where $|y| > 0$, $|xy| \le p$, and $xy^iz \in C$ for all $i > 0$. 
+                Let a string $s = 1^p 0 1^p$. Since $s \in C$, by the pumping lemma, $s$ can be written as $s = xyz$, where $|y| > 0$, $|xy| \le p$, and $xy^iz \in C$ for all $i > 0$. 
 
-                Let another string $s' = xz$, the case where $i = 0$. Since $|xy| \le p$, $xy$ must consist of $1$s entirely from the first substring of $1$s. Therefore, $s'$ can also be written as $s' = 1^{p-j} 1^p$, where $j = |y|$. Since $p-j < p$, $s' \notin C$. This contradicts the pumping lemma, which stated that $s' \in C$. 
+                Let another string $s' = xz$, the case where $i = 0$. Since $|xy| \le p$, $xy$ must consist of $1$s entirely from the first substring of $1$s. Therefore, $s'$ can also be written as $s' = 1^{p-j} 0 1^p$, where $j = |y|$. Since $p-j < p$, $s' \notin C$. This contradicts the pumping lemma, which stated that $s' \in C$. 
 
                 By contradiction, $C$ is not a regular language.
                 
