@@ -264,7 +264,7 @@
 
                 \item If \texttt{[} is read, read the symbol under head 2. If the symbol is $a_0$, move head 1 to the right until it reaches its matching \texttt{]}. Otherwise, if the symbol is anything but $a_0$, continue.
 
-                \item If \texttt{]} is read, move head 1 left until it reaches its corresponding \texttt{[}.
+                \item If \texttt{]} is read, move head 1 left until it reaches its corresponding \texttt{[}. Then, move head 1 one more cell to the left, so that the condition check can happen at the start of the loop.
 
                 \item If $\text{\blanksymbol} $ is read, read the symbol under head 2. If the symbol is $a_0$, \textit{reject}, otherwise, \textit{accept}.
             \end{enumerate}
