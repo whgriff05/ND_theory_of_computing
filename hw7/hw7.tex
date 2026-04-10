@@ -91,7 +91,18 @@
 
         \item Prove that it is decidable whether a TM $M$, on input $w$, ever attempts to move its head past the right end of the input string $w$. Your answer should be a high-level description of a TM. 
 
-            Construct a TM $R$ that decides whether a TM $M$, on input $w$, attempts to move its head past the right end of $w$. This is done by simulating $M$ on $w$. The total number of configurations $M$ can be in, $C$, is equal to $C = |Q| \times |w| \times |\Gamma|^{|w|}$. Simulate $M$ on $w$ for at most $C$ steps. Between each step in the situation, if the head moves right past the position $n$, \textit{accept}. If $M$ halts without ever moving right past the position $n$, \textit{reject}. After $C$ steps of simulation, if $M$ has not halted, \textit{reject}.
+            Construct a TM $R$ such that
+
+            $R = $ ``On input $w$:
+            \begin{enumerate}[1.]
+                \item Simulate $M$ on $w$, performing each of the successive steps after each transition in $M$, for at most $C$ steps, where $C = |Q| \times |w| \times |\Gamma|^{|w|}$ is the total number of configurations.
+
+                \item If the head moves right past the position $n$, where $n$ has the last symbol in $w$, \textit{accept}.
+
+                \item If $M$ halts without ever moving past the position $n$, \textit{reject}.
+
+                \item If $M$ is simulated and has not halted after $C$ steps of simulation, \textit{reject}."
+            \end{enumerate}
             
     \end{enumerate}
 
@@ -115,7 +126,18 @@
 
             If it is decidable whether a TM $M$ is 10-compliant, then there is some decider $R$ that decides 10-compliancy for a TM $M$.
 
-            To prove that $L_2$ is decidable, construct a TM $S$ that operates on some input $w$. If $w \ne \langle M \rangle$ ($w$ is not a valid TM encoding), \textit{reject}. Run the decider $R$ on $\langle M \rangle$. If $M$ is not 10-compliant, \textit{reject}. If $M$ is 10-compliant, simulate $M$ on $\langle M \rangle$. Since $M$ is 10-compliant, this simulation will eventually halt. If $M$ rejects $\langle M \rangle$, \textit{accept}, otherwise, if $M$ accepts $\langle M \rangle$, \textit{reject}.
+            Construct a TM $S$ that decides $L_2$. $S = $ ``On input $w$,
+            \begin{enumerate}[1.]
+                \item If $w$ is not in the form of $\langle M \rangle$ for some TM $M$, \textit{reject}.
+
+                \item Run the decider $R$ on $\langle M \rangle$. If $M$ is not 10-compliant, \textit{reject}.
+
+                \item If $M$ is 10-compliant, simulate $M$ on $\langle M \rangle$. Since $M$ is 10-compliant, it will halt. 
+
+                \item If $M$ rejects $\langle M \rangle$, \textit{accept}.
+
+                \item If $M$ accepts $\langle M \rangle$, \textit{reject}."
+            \end{enumerate}
 
             Since this TM $S$ halts on any input and only accepts TMs that are both 10-compliant and reject their own encoding, $L_2$ is decidable.
 
@@ -140,7 +162,14 @@
 
             Therefore, since the closure operations of complementation, union, and intersection are closed under regular languages, it is enough to prove whether determining a DFA recognizes the empty language $L_\text{diff}$ is decidable.
 
-            To do this, construct some TM $M_\emptyset$ that operates on the input string of $\langle M_\text{diff} \rangle$ (the DFA constructed from $L_\text{diff}$). Search for a path to any accept state in $M_\text{diff}$. If any accept state is reachable, \textit{reject}. If no accept state is reachable, \textit{accept}.
+            To do this, construct $M_\emptyset = $ ``On input $\langle M_\text{diff} \rangle$:
+            \begin{enumerate}[1.]
+                \item Start at the start state of $M_\text{diff}$. If the start state is an accept state, \textit{reject}.
+
+                \item Moving along every connected transition from the start state, if an accept state is reached, \textit{reject}.
+
+                \item Otherwise, \textit{accept}.
+            \end{enumerate}
 
             Since a TM that halts on any input of $\langle M_\text{diff} \rangle$ can be constructed to decide $L_\text{diff}$, $L_\text{diff}$ is decidable. By closure properties of complementation, union, and intersection under regular lagnuages, this can be extended to say that it is decidable whether 2 regular expressions are equivalent.
 
